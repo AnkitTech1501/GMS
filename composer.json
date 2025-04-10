@@ -1,0 +1,7 @@
+{
+    "name": "myvendor/gym123",
+    "description": "gym management system",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
