@@ -28,14 +28,14 @@ include('dbcon.php'); ?>
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <span class="add-on bg_lg"><i class="fas fa-user-circle"></i></span><input type="text" name="user_input" placeholder="Username" required />
+                        <span class="add-on bg_lg"><i class="fas fa-user-circle"></i></span><input type="text" name="user_input" placeholder="Enter your Username" required />
                     </div>
                 </div>
             </div>
             <div class="form-actions center">
                 <!-- <span class="pull-right"><a type="submit" href="index.html" class="btn btn-success" /> Login</a></span> -->
                 <!-- <input type="submit" class="button" title="Log In" name="login" value="Admin Login"></input> -->
-                <button type="submit" class="btn btn-block btn-large btn-info" title="Reset Password" name="reset">Forgot Password</button>
+                <button type="submit" class="btn btn-block btn-large btn-info" title="Reset Password" name="reset">Send Reset link to email</button>
             </div>
 
 

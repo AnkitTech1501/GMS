@@ -21,7 +21,7 @@ include('dbcon.php'); ?>
 <body>
 
     <div id="loginbox">
-        <form id="loginform" method="POST" class="form-vertical" action="#">
+        <form id="loginform" method="POST" class="form-vertical" action="">
             <div class="control-group normal_text">
                 <h3><img src="img/icontest3.png" alt="Logo" /></h3>
             </div>
@@ -52,11 +52,11 @@ include('dbcon.php'); ?>
             die("Invalid or expired token.");
         }
 
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['reset'])) {
             $new_pass = md5(mysqli_real_escape_string($con, $_POST['new_password']));
             $email = $data['email'];
 
-            $update = mysqli_query($con, "UPDATE admin SET password='$new_pass' WHERE email='$email'");
+            $update = mysqli_query($con, "UPDATE admin SET password='$new_pass' WHERE EMAIL_ID='$email'");
 
             if ($update) {
                 mysqli_query($con, "DELETE FROM password_resets WHERE email='$email'"); // Clean up
