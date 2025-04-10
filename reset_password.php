@@ -28,7 +28,7 @@ include('dbcon.php'); ?>
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <span class="add-on bg_lg"><i class="fas fa-user-circle"></i></span><input type="text" name="new_password" placeholder="Username" required />
+                        <span class="add-on bg_lg"><i class="fas fa-user-circle"></i></span><input type="text" name="new_password" placeholder="enter new password" required />
                     </div>
                 </div>
             </div>
@@ -55,9 +55,8 @@ include('dbcon.php'); ?>
         if (isset($_POST['submit'])) {
             $new_pass = md5(mysqli_real_escape_string($con, $_POST['new_password']));
             $email = $data['email'];
-            $role = $data['role'];
 
-            $update = mysqli_query($con, "UPDATE $role SET password='$new_pass' WHERE email='$email'");
+            $update = mysqli_query($con, "UPDATE admin SET password='$new_pass' WHERE email='$email'");
 
             if ($update) {
                 mysqli_query($con, "DELETE FROM password_resets WHERE email='$email'"); // Clean up
