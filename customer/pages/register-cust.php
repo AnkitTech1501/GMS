@@ -97,6 +97,11 @@
             if (empty($contact)) $errors[] = "Contact number is required.";
 
             // Additional validations
+            $username_check = mysqli_query($con, "SELECT user_id FROM members WHERE username = '$username'");
+            if (mysqli_num_rows($username_check) > 0) {
+                $errors[] = "This username is already taken. Please choose another.";
+            }
+
             if (!preg_match('/^[0-9]{10}$/', $contact)) {
                 $errors[] = "Contact number must be 10 digits.";
             } else {
@@ -119,8 +124,8 @@
             }
             $referral_code = generateReferralCode();
 
-            $qry = "INSERT INTO members(fullname, username, password, dor, gender, services, amount, plan, address, contact, status, referral_code, referred_by)
-                    VALUES ('$fullname', '$username', '$password', CURRENT_TIMESTAMP, '$gender', '$services', '0', '$plan', '$address', '$contact', 'Pending', '$referral_code', '$referred_by')";
+            $qry = "INSERT INTO members(fullname, username, password, dor, gender, services, amount, plan, address, contact, status, referral_code, referred_by,status)
+                    VALUES ('$fullname', '$username', '$password', CURRENT_TIMESTAMP, '$gender', '$services', '0', '$plan', '$address', '$contact', 'Pending', '$referral_code', '$referred_by','Active')";
 
             $result = mysqli_query($con, $qry);
             $new_user_id = mysqli_insert_id($con);

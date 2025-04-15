@@ -53,10 +53,9 @@ include('dbcon.php'); ?>
             if (isset($_POST['login'])) {
                 $username = mysqli_real_escape_string($con, $_POST['user']);
                 $password = mysqli_real_escape_string($con, $_POST['pass']);
-
-                $password = md5($password);
-
-                $query         = mysqli_query($con, "SELECT * FROM members WHERE  password='$password' and username='$username' and status='Active'");
+                $qy = "SELECT * FROM members WHERE  password='$password' and username='$username' and status='Active'";
+                // die($qy);
+                $query         = mysqli_query($con, $qy);
                 $row        = mysqli_fetch_array($query);
                 $num_row     = mysqli_num_rows($query);
 
