@@ -82,14 +82,32 @@ if (!isset($_SESSION['user_id'])) {
                   <th>Contact Number</th>
                   <th>D.O.R</th>
                   <th>Address</th>
-                  <th>Amount</th>
+                  <th>Base Amount</th>
                   <th>Choosen Service</th>
                   <th>Plan</th>
+                  <th>Actual Amount</th>
                   <th>Referrals</th>
                 </tr>
               </thead>";
 
               while ($row = mysqli_fetch_array($result)) {
+                $referralJson = $row['referral_earning'];
+                $referralData = json_decode($referralJson, true);
+                $totalPercent = 0;
+                $baseAmount = (float)$row['amount'];
+
+                if ($referralData) {
+                  foreach ($referralData as $direct => $inner) {
+                    foreach ($inner as $ref => $percent) {
+                      $totalPercent += $percent;
+                    }
+                  }
+                }
+
+                $totalEarned = ($baseAmount * $totalPercent) / 100;
+                $tds = $totalEarned * 0.10;
+                $finalCostCut = $totalEarned - $tds;
+                $remainingAmount = $baseAmount - $finalCostCut;
 
                 echo "<tbody> 
                
@@ -103,13 +121,13 @@ if (!isset($_SESSION['user_id'])) {
                 <td><div class='text-center'>$" . $row['amount'] . "</div></td>
                 <td><div class='text-center'>" . $row['services'] . "</div></td>
                 <td><div class='text-center'>" . $row['plan'] . " Month/s</div></td>
-             
+                <td><div class='text-center text-success'>$" . number_format($remainingAmount, 2) . "</div></td>
                 <td>
                   <div class='text-center'>
                     <form method='POST' action='view-referrals.php' style='margin:0;'>
-                      <input type='hidden' name='user_id' value=".$row['user_id'].">
-                      <input type='hidden' name='username' value=".$row['username'].">
-                      <input type='hidden' name='fullname' value=".$row['fullname'].">
+                      <input type='hidden' name='user_id' value=" . $row['user_id'] . ">
+                      <input type='hidden' name='username' value=" . $row['username'] . ">
+                      <input type='hidden' name='fullname' value=" . $row['fullname'] . ">
                       <button class='btn btn-info btn-mini'>
                       View Referrals
                       </button>

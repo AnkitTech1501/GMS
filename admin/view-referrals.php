@@ -10,11 +10,11 @@ $user_id = $_POST['user_id'];
 $username = $_POST['username'];
 $fullname = $_POST['fullname'];
 
-$q = "SELECT referral_earning, amount FROM members WHERE user_id = $user_id LIMIT 1";
+$q = "SELECT referral_earning,username as parent_member_username, amount FROM members WHERE user_id = $user_id LIMIT 1";
 $r = mysqli_query($con, $q);
 $row = mysqli_fetch_assoc($r);
 $referralData = json_decode($row['referral_earning'], true);
-
+$parent_member_username = $row['parent_member_username'];
 $baseAmount = isset($row['amount']) ? (float)$row['amount'] : 10000;
 ?>
 
@@ -144,13 +144,13 @@ $baseAmount = isset($row['amount']) ? (float)$row['amount'] : 10000;
 
                     function formatCurrency($num)
                     {
-                        return '₹' . number_format($num, 2);
+                        return '$' . number_format($num, 2);
                     }
 
                     foreach ($referralData as $direct => $referrals):
-                        $directUsername = getUsername($direct, $con);
+                        // $directUsername = getUsername($direct, $con);
                         echo "<div class='referral-box'>";
-                        echo "<div class='referral-title'><i class='fas fa-user-friends'></i> $directUsername referred:</div>";
+                        echo "<div class='referral-title'><i class='fas fa-user-friends'></i> $parent_member_username referred:</div>";
                         foreach ($referrals as $ref => $percent) {
                             $refUsername = getUsername($ref, $con);
                             $earnedAmount = ($baseAmount * $percent) / 100;
@@ -169,7 +169,7 @@ $baseAmount = isset($row['amount']) ? (float)$row['amount'] : 10000;
 
                     $tds = $totalEarned * 0.10;
                     $finalPayout = $totalEarned - $tds;
-                    $remaining = $baseAmount - $totalEarned;
+                    $remaining = $baseAmount - $finalPayout;
                     ?>
 
                     <div class="total-summary">
