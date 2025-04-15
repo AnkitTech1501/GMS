@@ -431,7 +431,7 @@ $result5=mysqli_query($con,$qry);
   margin-left:auto; 
   margin-right:auto;
 }
-</style>
+</style>user-payemntuser-payment
 
 <!--end-Footer-part-->
 

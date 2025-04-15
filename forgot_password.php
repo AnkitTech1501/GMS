@@ -73,7 +73,7 @@ include('dbcon.php'); ?>
                         $mail->SMTPSecure = 'tls';
                         $mail->Port       = 587;
 
-                        $mail->setFrom('ankitdubey@email.com', 'Gym System');
+                        $mail->setFrom('ankitdubey91377@gmail.com', 'Gym System');
                         $mail->addAddress($email);
                         $mail->isHTML(true);
                         $mail->Subject = 'Password Reset Request';
