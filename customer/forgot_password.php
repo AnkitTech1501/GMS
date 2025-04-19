@@ -5,7 +5,7 @@ include('dbcon.php');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 $feedback = "";
 
@@ -15,7 +15,7 @@ if (isset($_POST['reset'])) {
     // Try finding user by username or email
     $admin_exists = mysqli_query(
         $con,
-        "SELECT EMAIL_ID FROM admin WHERE username = '$user_input' OR EMAIL_ID = '$user_input'"
+        "SELECT EMAIL_ID FROM members WHERE username = '$user_input' OR EMAIL_ID = '$user_input'"
     );
 
     if (mysqli_num_rows($admin_exists) > 0) {
@@ -25,11 +25,11 @@ if (isset($_POST['reset'])) {
         $token = bin2hex(random_bytes(32)); // secure random token
         $insert = mysqli_query(
             $con,
-            "INSERT INTO password_resets (email, token, role) VALUES ('$email', '$token', 'ADMIN')"
+            "INSERT INTO password_resets (email, token, role) VALUES ('$email', '$token', 'MEMBERS')"
         );
 
         if ($insert) {
-            $resetLink = "http://localhost:8080/Gym-System/reset_password.php?token=$token";
+            $resetLink = "http://localhost:8080/Gym-System/customer/reset_password.php?token=$token";
 
             $mail = new PHPMailer(true);
             try {
@@ -56,7 +56,7 @@ if (isset($_POST['reset'])) {
                 $feedback = "<div class='alert alert-success'>Password reset link sent to <strong>$email</strong>.</div>";
             } catch (Exception $e) {
                 $errorLog = "Mailer Error: {$mail->ErrorInfo}\n";
-                file_put_contents("AdminEmaillog.txt", $errorLog, FILE_APPEND);
+                file_put_contents("CustomerEmaillog.txt", $errorLog, FILE_APPEND);
                 $feedback = "<div class='alert alert-danger'>Error sending email: {$mail->ErrorInfo}</div>";
             }
         } else {
@@ -79,8 +79,8 @@ if (isset($_POST['reset'])) {
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" href="css/matrix-style.css" />
     <link rel="stylesheet" href="css/matrix-login.css" />
-    <link href="font-awesome/css/fontawesome.css" rel="stylesheet" />
-    <link href="font-awesome/css/all.css" rel="stylesheet" />
+    <link href="../font-awesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="../font-awesome/css/all.css" rel="stylesheet" />
 </head>
 
 <body>

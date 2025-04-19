@@ -39,6 +39,9 @@ include('dbcon.php'); ?>
                     </div>
                 </div>
             </div>
+            <div class="" style="margin-top: 10px;">
+                <a href="forgot_password.php"><strong>Forgot Password?</strong></a>
+            </div>
             <div class="form-actions">
                 <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Join Now!</a></span>
                 <span class="pull-right"><button type="submit" name="login" class="btn btn-success" />Customer Login</button></span>
@@ -53,6 +56,7 @@ include('dbcon.php'); ?>
             if (isset($_POST['login'])) {
                 $username = mysqli_real_escape_string($con, $_POST['user']);
                 $password = mysqli_real_escape_string($con, $_POST['pass']);
+                $password = md5($password);
                 $qy = "SELECT * FROM members WHERE  password='$password' and username='$username' and status='Active'";
                 // die($qy);
                 $query         = mysqli_query($con, $qy);

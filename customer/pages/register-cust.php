@@ -123,7 +123,7 @@
                 exit;
             }
             $referral_code = generateReferralCode();
-
+            $password = md5($password);
             $qry = "INSERT INTO members(fullname, username, password, dor, gender, services, amount, plan, address, contact, status, referral_code, referred_by,status)
                     VALUES ('$fullname', '$username', '$password', CURRENT_TIMESTAMP, '$gender', '$services', '0', '$plan', '$address', '$contact', 'Pending', '$referral_code', '$referred_by','Active')";
 
